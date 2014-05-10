@@ -2,23 +2,23 @@ class QuestionsController < ApplicationController
   def question_1
     # What is the most recent movie on the list that the second actor appeared in?
 
-    # Your Ruby goes here.
-    # @the_actor = Actor.find(2)
-    # @the_actor_movies =Movie.where(@the_actor)
-    # @first_movie_actor = @the_actor_movies.first
+    # # # # Your Ruby goes here.
+    @the_actor = Actor.find(2656).movies.order("year DESC").first.title
 
-    # @most_recent_movie_for_second_actor = @first_movie_actor.title
+    @most_recent_movie_for_second_actor = @the_actor
+
+
 
   end
 
   def question_2
-    # Who directed the longest movie on the list?
+  #   Who directed the longest movie on the list?
 
-    # Your Ruby goes here.
-    @longest_movie = Movie.order("duration DESC").first
-    @the_director = Director.where(@longest_movie).name
+    # # # # Your Ruby goes here.
+    @longest_movie = Movie.order("duration DESC").first.director_id
+    @the_director = Director.find_by({:id => @longest_movie})
 
-    @director_of_longest_movie = @the_director
+    @director_of_longest_movie = @the_director.name
   end
 
   def question_3
@@ -26,7 +26,10 @@ class QuestionsController < ApplicationController
 
     # Your Ruby goes here.
 
-    # @director_with_the_most_movies = ???
+    @most_movies = Director.find(Movie.sort.count.first.director.director_id
+
+
+    @director_with_the_most_movies = Director.find(@most_movies).name
   end
 
   def question_4
@@ -34,6 +37,8 @@ class QuestionsController < ApplicationController
     # (If there's a tie, any one of them is fine)
 
     # Your Ruby goes here.
+
+    # @actor_movies = Actor.where
 
     # @actor_with_the_most_movies = ???
   end

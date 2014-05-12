@@ -15,10 +15,10 @@ class QuestionsController < ApplicationController
   #   Who directed the longest movie on the list?
 
     # # # # Your Ruby goes here.
-    @longest_movie = Movie.order("duration DESC").first.director_id
-    @the_director = Director.find_by({:id => @longest_movie})
+    @longest_movie = Movie.order("duration DESC").first.director.name
+    # @the_director = Director.find_by({:id => @longest_movie})
 
-    @director_of_longest_movie = @the_director.name
+    @director_of_longest_movie = @longest_movie
   end
 
   def question_3
@@ -27,33 +27,40 @@ class QuestionsController < ApplicationController
     # Your Ruby goes here.
 
 
-    the_top_director = Director.second
+    the_top_director = Director.first
 
     Director.all.each do |director|
+
       if the_top_director.movies.count < director.movies.count
+
         the_top_director = director
 
       end
+
     end
 
     @director_with_the_most_movies = the_top_director.name
   end
 
   def question_4
-    # Which actor has been in the most movies on the list?
-    # (If there's a tie, any one of them is fine)
+#     # Which actor has been in the most movies on the list?
+#     # (If there's a tie, any one of them is fine)
 
-#     # Your Ruby goes here.
+# #     # Your Ruby goes here.
 
 
     @actor_with_the_most_movies = Actor.first
 
     Actor.all.each do |actor|
+
       if @actor_with_the_most_movies.movies.count < actor.movies.count
 
         @actor_with_the_most_movies = actor
+        end
       end
     end
+
+
 #   movie_counts = []
 
 #     Actor.all.each do |the_actor|
@@ -70,21 +77,77 @@ class QuestionsController < ApplicationController
 
 
 
-    # @actor_with_the_most_movies = sorted_list.first
-  end
+#     @actor_with_the_most_movies = sorted_list.first
+
 
   def question_5
 
 
-    # This one is hard. Work on it after all your other review is complete.
+#     # This one is hard. Work on it after all your other review is complete.
 
-    # Which actor/director pair has the most movies on the list?
-    # (If there's a tie, any pair of them is fine)
+#     # Which actor/director pair has the most movies on the list?
+#     # (If there's a tie, any pair of them is fine)
 
-    # Your Ruby goes here.
+#     # Your Ruby goes here.
 
-    # @actor = ???
-    # @director = ???
-    # @movies_together = ???
+#   #   @movies_together = 0
+
+#   #   Actor.all.each do |actor|
+
+
+#   #   end
+
+#   #   Director.all.each do |director|
+
+
+#   #   end
+#   # if
+
+#   # end
+#   #   # @actor = ???
+#   #   # @director = ???
+#   #   # @movies_together = ???
+
+   most_movies_together = 0
+
+   @actor = nil
+
+   @director = nil
+
+
+
+   Actor.all.each do |actor|
+
+     this_actors_most_movies_with_one_director = 0
+      this_actors_favorite_director = nil
+
+
+
+     actor.movies.each do |movie|
+
+      number_of_movies_with_same_director_as_this_one = actor.movies.where(:director_id => movie.director_id).count
+
+
+
+       if this_actors_most_movies_with_one_director < number_of_movies_with_same_director_as_this_one
+         this_actors_most_movies_with_one_director = number_of_movies_with_same_director_as_this_one
+         this_actors_favorite_director = movie.director
+
+       end
+     end
+
+
+
+     if most_movies_together < this_actors_most_movies_with_one_director
+       most_movies_together = this_actors_most_movies_with_one_director
+       @director = this_actors_favorite_director
+       @actor = actor
+
+     end
+   end
+
+
+
+   @movies_together = @actor.movies.where(:director_id => @director.id)
   end
 end

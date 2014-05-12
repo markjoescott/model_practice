@@ -1,1 +1,19 @@
 <pre><%= @director.to_yaml %></pre>
+
+<h1>Filmography</h1>
+
+<ul>
+
+  <% @director.movies.each do |movie| %>
+
+  <a href="/movies/> <%  movie.id  %>"
+
+  </a>
+
+<li>
+  <%= movie.title %>
+</li>
+  <% end %>
+
+</ul>
+

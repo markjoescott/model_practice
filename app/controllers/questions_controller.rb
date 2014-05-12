@@ -27,11 +27,12 @@ class QuestionsController < ApplicationController
     # Your Ruby goes here.
 
 
-    the_top_director = Director.new
+    the_top_director = Director.second
 
     Director.all.each do |director|
-      if the_top_director.movies.count > director.movies.count
+      if the_top_director.movies.count < director.movies.count
         the_top_director = director
+
       end
     end
 

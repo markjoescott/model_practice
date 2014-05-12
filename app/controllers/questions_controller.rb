@@ -27,23 +27,16 @@ class QuestionsController < ApplicationController
     # Your Ruby goes here.
 
 
-  the_top_director = Director.new
+    the_top_director = Director.new
 
-  Director.all.each do |director|
-
-    if
-
-    the_top_director.movies.count > director.movies.count
-
-    the_top_director = director
-
-end
-end
+    Director.all.each do |director|
+      if the_top_director.movies.count > director.movies.count
+        the_top_director = director
+      end
+    end
 
     @director_with_the_most_movies = the_top_director.name
-
-
-end
+  end
 
   def question_4
     # Which actor has been in the most movies on the list?
@@ -52,18 +45,14 @@ end
 #     # Your Ruby goes here.
 
 
-  the_actor = Actor.new
+    @actor_with_the_most_movies = Actor.first
 
-  Actor.all.each do |actor|
+    Actor.all.each do |actor|
+      if @actor_with_the_most_movies.movies.count < actor.movies.count
 
-  if
-      the_actor.movies.count > actor.movies.count
-
-      the_actor = actor
-
+        @actor_with_the_most_movies = actor
+      end
     end
-
-  @actor_with_the_most_movies = the_actor
 #   movie_counts = []
 
 #     Actor.all.each do |the_actor|
@@ -81,8 +70,7 @@ end
 
 
     # @actor_with_the_most_movies = sorted_list.first
-end
-end
+  end
 
   def question_5
 
